@@ -71,4 +71,23 @@ public class JobApplication {
 		this.nextDate = nextDate;
 	}
 
+	public String getStageName() {
+		switch (stage) {
+		case 1:
+			return "書類";
+		case 2:
+			return "一次";
+		case 3:
+			return "二次";
+		case 4:
+			return "最終";
+		case 5:
+			return "内定";
+		case 6:
+			return "不採用";
+		default:
+			return "不明";
+		}
+	}
+
 }
