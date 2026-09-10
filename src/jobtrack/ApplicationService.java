@@ -40,7 +40,8 @@ public class ApplicationService {
 					app.getJobType() + " " +
 					app.getStageName() + " " +
 					app.getNextAction() + " " +
-					app.getNextDate());
+					app.getNextDate() + " " +
+					remain);
 
 		}
 	}

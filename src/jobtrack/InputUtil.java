@@ -22,6 +22,7 @@ public class InputUtil {
 			System.out.print(prompt);
 			if (scanner.hasNextInt()) {
 				int value = scanner.nextInt();
+				scanner.nextLine();
 				return value;
 			}
 			scanner.nextLine();
