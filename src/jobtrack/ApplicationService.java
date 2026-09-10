@@ -45,4 +45,30 @@ public class ApplicationService {
 
 		}
 	}
+
+	private JobApplication findById(int id) {
+		for (JobApplication app : list) {
+			if (app.getId() == id) {
+				return app;
+			}
+		}
+		return null;
+	}
+
+	public void delete() {
+		if (list.isEmpty()) {
+			System.out.println("登録されていません");
+			return;
+		}
+		showAll();
+		int id = InputUtil.readInt("削除する番号: ");
+		JobApplication app = findById(id);
+		if (app == null) {
+			System.out.println("その番号は存在しません");
+			return;
+		}
+		list.remove(app);
+		System.out.println("削除しました");
+	}
+
 }
