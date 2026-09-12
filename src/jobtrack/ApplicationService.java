@@ -71,4 +71,64 @@ public class ApplicationService {
 		System.out.println("削除しました");
 	}
 
+	public void update() {
+		if (list.isEmpty()) {
+			System.out.println("登録されていません");
+			return;
+		}
+		showAll();
+		int id = InputUtil.readInt("更新する番号を選択: ");
+		JobApplication app = findById(id);
+		if (app == null) {
+			System.out.println("その番号は存在しません");
+			return;
+		}
+		System.out.println("1.書類");
+		System.out.println("2.一次");
+		System.out.println("3.二次");
+		System.out.println("4.最終");
+		System.out.println("5.内定");
+		System.out.println("6.不採用");
+		int stage = InputUtil.readIntInRange("段階: ", 1, 6);
+		app.setStage(stage);
+		String nextAction = InputUtil.readText("次の予定: ");
+		app.setNextAction(nextAction);
+		LocalDate nextDate = InputUtil.readDate("期日の入力: ");
+		app.setNextDate(nextDate);
+		System.out.println("更新しました。");
+
+	}
+
+	public void search() {
+		if (list.isEmpty()) {
+			System.out.println("登録されていません");
+			return;
+		}
+		String word = InputUtil.readText("検索語: ");
+		int count = 0;
+		for (JobApplication app : list) {
+			if (app.getCompanyName().contains(word) || app.getJobType().contains(word)) {
+				long days = ChronoUnit.DAYS.between(LocalDate.now(), app.getNextDate());
+				String remain;
+				if (days < 0) {
+					remain = "期限切れ";
+				} else {
+					remain = "あと" + days + "日";
+				}
+				System.out.println(app.getId() + " " +
+						app.getCompanyName() + " " +
+						app.getJobType() + " " +
+						app.getStageName() + " " +
+						app.getNextAction() + " " +
+						app.getNextDate() + " " +
+						remain);
+				count++;
+			}
+		}
+		if (count == 0) {
+			System.out.println("見つかりませんでした");
+			return;
+		}
+	}
+
 }
