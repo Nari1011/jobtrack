@@ -131,4 +131,17 @@ public class ApplicationService {
 		}
 	}
 
+	public ArrayList<JobApplication> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<JobApplication> list) {
+		this.list = list;
+		for (JobApplication app : list) {
+			if (app.getId() >= nextId) {
+				nextId = app.getId() + 1;
+			}
+		}
+	}
+
 }
