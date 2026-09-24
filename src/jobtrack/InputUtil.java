@@ -20,13 +20,13 @@ public class InputUtil {
 	public static int readInt(String prompt) {
 		while (true) {
 			System.out.print(prompt);
-			if (scanner.hasNextInt()) {
-				int value = scanner.nextInt();
-				scanner.nextLine();
+			String input = scanner.nextLine();
+			try {
+				int value = Integer.parseInt(input);
 				return value;
+			} catch (NumberFormatException e) {
+				System.out.println("整数で入力してください。");
 			}
-			scanner.nextLine();
-			System.out.println("整数で入力してください。");
 		}
 	}
 
