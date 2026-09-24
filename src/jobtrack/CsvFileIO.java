@@ -1,31 +1,31 @@
 package jobtrack;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CsvFileIO {
 
 	private static final String FILE_NAME = "applications.csv";
 
 	public void save(ArrayList<JobApplication> list) {
-		ArrayList<String> lines = new ArrayList<>();
-		for (JobApplication app : list) {
-			String line = app.getId() + "," +
-					app.getCompanyName() + "," +
-					app.getJobType() + "," +
-					app.getAppliedDate() + "," +
-					app.getStage() + "," +
-					app.getNextAction() + "," +
-					app.getNextDate();
-			lines.add(line);
-		}
-
 		try {
-			Files.write(Paths.get(FILE_NAME), lines);
+			FileWriter fw = new FileWriter(FILE_NAME);
+			for (JobApplication app : list) {
+				String line = app.getId() + "," +
+						app.getCompanyName() + "," +
+						app.getJobType() + "," +
+						app.getAppliedDate() + "," +
+						app.getStage() + "," +
+						app.getNextAction() + "," +
+						app.getNextDate();
+				fw.write(line + "\n");
+			}
+			fw.close();
 		} catch (IOException e) {
 			System.out.println("保存に失敗しました");
 		}
@@ -33,13 +33,10 @@ public class CsvFileIO {
 
 	public ArrayList<JobApplication> load() {
 		ArrayList<JobApplication> list = new ArrayList<>();
-		if (!Files.exists(Paths.get(FILE_NAME))) {
-			return list;
-		}
 
-		try {
-			List<String> lines = Files.readAllLines(Paths.get(FILE_NAME));
-			for (String line : lines) {
+		try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+			String line = br.readLine();
+			while (line != null) {
 				String[] parts = line.split(",");
 				JobApplication app = new JobApplication(
 						Integer.parseInt(parts[0]),
@@ -50,7 +47,9 @@ public class CsvFileIO {
 						LocalDate.parse(parts[6]));
 				app.setStage(Integer.parseInt(parts[4]));
 				list.add(app);
+				line = br.readLine();
 			}
+		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 			System.out.println("読み込みに失敗しました");
 		}
