@@ -1,5 +1,6 @@
 package jobtrack;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -42,11 +43,16 @@ public class InputUtil {
 
 	public static LocalDate readDate(String prompt) {
 		System.out.println(prompt);
-		int year = readIntInRange("年: ", 2000, 2100);
-		int month = readIntInRange("月: ", 1, 12);
-		int maxDay = LocalDate.of(year, month, 1).lengthOfMonth();
-		int day = readIntInRange("日: ", 1, maxDay);
-		return LocalDate.of(year, month, day);
+		while (true) {
+			int year = readIntInRange("年: ", 2000, 2100);
+			int month = readIntInRange("月: ", 1, 12);
+			int day = readIntInRange("日: ", 1, 31);
+			try {
+				return LocalDate.of(year, month, day);
+			} catch (DateTimeException e) {
+				System.out.println("存在しない日付です。もう一度入力してください。");
+			}
+		}
 	}
 
 	public static void close() {
