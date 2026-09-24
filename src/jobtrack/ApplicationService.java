@@ -22,7 +22,7 @@ public class ApplicationService {
 	}
 
 	public void showAll() {
-		if (list.isEmpty()) {
+		if (list.size() == 0) {
 			System.out.println("登録されていません");
 			return;
 		}
@@ -56,7 +56,7 @@ public class ApplicationService {
 	}
 
 	public void delete() {
-		if (list.isEmpty()) {
+		if (list.size() == 0) {
 			System.out.println("登録されていません");
 			return;
 		}
@@ -72,7 +72,7 @@ public class ApplicationService {
 	}
 
 	public void update() {
-		if (list.isEmpty()) {
+		if (list.size() == 0) {
 			System.out.println("登録されていません");
 			return;
 		}
@@ -100,14 +100,14 @@ public class ApplicationService {
 	}
 
 	public void search() {
-		if (list.isEmpty()) {
+		if (list.size() == 0) {
 			System.out.println("登録されていません");
 			return;
 		}
 		String word = InputUtil.readText("検索語: ");
 		int count = 0;
 		for (JobApplication app : list) {
-			if (app.getCompanyName().contains(word) || app.getJobType().contains(word)) {
+			if (app.getCompanyName().indexOf(word) != -1 || app.getJobType().indexOf(word) != -1) {
 				long days = ChronoUnit.DAYS.between(LocalDate.now(), app.getNextDate());
 				String remain;
 				if (days < 0) {
