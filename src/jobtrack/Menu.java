@@ -14,7 +14,7 @@ public class Menu {
 		System.out.println("2.応募先の一覧表示");
 		System.out.println("3.応募先の削除");
 		System.out.println("4.選考段階の更新");
-		System.out.println("5.検索: ");
+		System.out.println("5.検索");
 		System.out.println("0.終了");
 		System.out.println("--------------");
 	}
